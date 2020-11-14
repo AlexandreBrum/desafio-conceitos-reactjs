@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import api from './services/api';
 
 import "./styles.css";
@@ -7,30 +7,32 @@ function App() {
   const [repositories, setRepositories] = useState([]);
 
   useEffect(() => {
-    api.get('respositories').then(Response => {
+    api.get('repositories').then(response => {
       setRepositories(response.data);
     });
   }, []);
 
 
   async function handleAddRepository() {
-    const response = await api.post('respositories', {
-      title: 'Desafio ReactJs',
-      url:'https://www.desafio.com.br/gostack',
-      techs: ['NodeJs', 'ReactNative']
-
+    const response = await api.post('repositories', {
+      id: "123",
+      url:"https://www.desafio.com.br/gostack",
+      title: "Desafio ReactJs",
+      techs: ["NodeJs", "ReactNative"],
     });
 
-    setRepositories([...repositories, response.data ]);
+    setRepositories([ ...repositories, response.data ]);
 
   }
 
   async function handleRemoveRepository(id) {
     await api.delete(`repositories/${id}`);
 
-    setRepositories(repositories.filter(
-      repository => repository.id != id
-    ));
+    const newRepositories = repositories.filter(
+      repository => repository.id !== id
+    )
+    
+    setRepositories(newRepositories);
   }
 
   return (
